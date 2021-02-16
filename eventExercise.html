@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">    
+    <title>IFE ECMAScript</title>
+</head>
+<body>
+<input id="name" type="text">    
+<button id="submit-btn">Submit</button>
+
+<script>
+//当点击按钮 submit-btn 时，在console中输出 name 中的内容
+function showName(){
+    console.log(document.getElementById("name").value);
+}
+
+document.getElementById("submit-btn").onclick = showName; //没有括号
+//在输入过程中，如果按回车键，则同样执行上一条的需求
+document.onkeydown = function(event){
+    if(event && event.keyCode == 13){
+        showName();  //需要括号
+    }
+}
+//在输入过程中，如果按 ESC 键，则把输入框中的内容清空
+document.onkeydown = function(event){
+    if(event && event.keyCode == 27){
+        document.getElementById("name").value = '';
+        console.log("pressed");
+    }
+}
+</script>
+</body>
+</html>

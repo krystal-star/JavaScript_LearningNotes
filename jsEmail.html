@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">    
+    <title>IFE ECMAScript</title>
+    <style>
+        li:hover{
+            background-color: antiquewhite;
+            cursor: pointer;;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <input id="email-input" type="text">
+        <ul id="email-sug-wrapper" class="email-sug"></ul>
+    </div>
+
+    <script>
+        var postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net'];
+        var ul = document.getElementById("email-sug-wrapper");
+
+        document.getElementById("email-input").onkeyup = function(){         
+            removeTips();  
+            addTips();
+            controlState();
+            console.log("event handel");
+        }
+
+        function getInput(s){
+            return s.trim();
+        }
+
+        function getTips(){
+            var input = getInput(document.getElementById("email-input").value);
+            var lis;
+            if(input.indexOf("@") != -1){    
+                var newInput = input.split("@")[0];
+                var possiblePostfix = input.split("@")[1];
+                lis = haveAt(newInput, possiblePostfix);
+                
+                if(lis.length == 0){
+                    lis = haveNoAt(newInput);
+                }
+                return lis;
+            }else{
+                lis = haveNoAt(input);
+                return lis;
+        }
+    }
+
+        function haveNoAt(input){
+            var lis = [];
+            for(var i=0; i<postfixList.length; i++){
+                var li = document.createElement("li");
+                li.innerHTML = input + "@"+ postfixList[i];
+                lis.push(li);
+            }
+            return lis;
+        }
+
+        function haveAt(input, possiblePostfix){
+            var lis = [];
+            for(var i=0; i<postfixList.length; i++){
+                if(postfixList[i].indexOf(possiblePostfix) == 0){
+                    var li = document.createElement("li");
+                    li.innerHTML = input + "@"+ postfixList[i];
+                    lis.push(li);
+                }
+            }
+            return lis;
+        }
+
+        function addTips(){
+            var lis = getTips();
+            for(var i=0; i<lis.length; i++){
+                ul.appendChild(lis[i]);
+            }
+        }
+
+        function removeTips(){
+            var lis = document.querySelectorAll("li");
+            if(lis){
+                for(var i=0; i<lis.length; i++){
+                ul.removeChild(lis[i]);
+            }
+            }           
+        }
+
+        function controlState(){
+            var input = getInput(document.getElementById("email-input").value);
+            if(!input){
+                hideBlock();
+            }else{
+                displayBlock();
+            }
+        }
+
+        function hideBlock(){
+            document.getElementById("email-sug-wrapper").style = "display:none; list-style-type: none";
+        }
+
+        function displayBlock(){
+            document.getElementById("email-sug-wrapper").style = "display:block; list-style-type: none";
+        }
+        
+        ul.onclick = function(event){
+            var e = event || window.event;
+            var target = e.target;
+            if(target.nodeName.toLowerCase() == "li"){
+                document.getElementById("email-input").value = target.innerHTML;
+                hideBlock();
+            }
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">    
+    <title>IFE ECMAScript</title>
+</head>
+<body>
+    <div>
+        <label>String A:
+            <input id="radio-a" type="radio" checked="true" name="str-obj" value="a">
+        </label>
+        <textarea id="str-a"></textarea>
+        <label>String B:
+            <input id="radio-b" type="radio" name="str-obj" value="b">
+        </label>
+        <textarea id="str-b"></textarea><br>     
+        <label>Num A：<input id="num-a" type="number" value="0"></label>
+        <label>Num B：<input id="num-b" type="number" value="1"></label>
+    </div>
+    <div>
+        <button onclick="one()">获取当前选中输入的内容长度</button>
+        <button onclick="two()">当前选中输入中的第3个字符</button>
+        <button onclick="three()">把两个输入框的文字连接在一起输出（concat）</button>
+        <button onclick="four()">输入B中的内容，在输入A的内容中第一次出现的位置（indexOf）</button>
+        <button onclick="five()">输入A中的内容，在输入B的内容中最后一次出现的位置（lastIndexOf）</button>
+        <button onclick="six()">使用slice获取选中输入框内容的部分内容，参数为num-a及num-b</button>
+        <button onclick="seven()">当前选中输入框的行数</button>
+        <button onclick="eight()">使用substr获取选中输入框内容的子字符串，参数为num-a及num-b</button>
+        <button onclick="nine()">把所选输入框中的内容全部转为大写</button>
+        <button onclick="ten()">把所选输入框中的内容全部转为小写</button>
+        <button onclick="eleven()">把所选输入框中内容的半角空格全部去除</button>
+        <button onclick="twelve()">把所选输入框中内容的a全部替换成另外一个输入框中的内容</button>
+    </div>
+    <p id="result"></p>
+    <script>
+        var radios = document.querySelectorAll("input[type='radio']"),
+        strings = document.querySelectorAll("textarea"),
+        p = document.getElementById("result");   
+
+        function one(){
+            for(var i=0; i<radios.length; i++){
+                if(radios[i].checked){
+                    p.innerHTML = strings[i].value.length;
+                }
+            }
+        }
+
+        function two(){
+            for(var i=0; i<radios.length; i++){
+                if(radios[i].checked){
+                    p.innerHTML = strings[i].value.charAt(2);
+                }
+            }
+        }
+
+        function three(){
+            var conString = '';
+            for(var i=0; i<radios.length; i++){
+                conString += strings[i].value;
+            }
+            p.innerHTML = conString;
+        }
+
+        function four(){
+            p.innerHTML = strings[0].value.indexOf(strings[1].value);
+        }
+
+        function five(){
+            p.innerHTML = strings[1].value.lastIndexOf(strings[0].value);
+        }
+
+        function six(){
+            var a = Number(document.getElementById("num-a").value), b = Number(document.getElementById("num-b").value);
+            for(var i=0; i<radios.length; i++){
+                if(radios[i].checked){
+                    p.innerHTML = strings[i].value.slice(a,b);
+                }
+            }
+        }
+
+        function seven(){
+            for(var i=0; i<radios.length; i++){
+                if(radios[i].checked){
+                    p.innerHTML = strings[i].value.split("\n").length;
+                }
+            }
+        }
+
+        function eight(){
+            var a = Number(document.getElementById("num-a").value), b = Number(document.getElementById("num-b").value);
+            for(var i=0; i<radios.length; i++){
+                if(radios[i].checked){
+                    p.innerHTML = strings[i].value.substr(a,b);
+                }
+            }
+        }
+
+        function nine(){
+            for(var i=0; i<radios.length; i++){
+                if(radios[i].checked){
+                    p.innerHTML = strings[i].value.toUpperCase();
+                }
+            }
+        }
+
+        function ten(){
+            for(var i=0; i<radios.length; i++){
+                if(radios[i].checked){
+                    p.innerHTML = strings[i].value.toLowerCase();
+                }
+            }
+        }
+
+        function eleven(){
+            for(var i=0; i<radios.length; i++){
+                if(radios[i].checked){
+                    p.innerHTML = strings[i].value.replaceAll(' ','');
+                }
+            }
+        }
+
+        function twelve(){
+            for(var i=0; i<radios.length; i++){
+                if(radios[i].checked){
+                    p.innerHTML = strings[i].value.replace("a", " ");
+                }
+            }
+        }
+
+        String.prototype.replaceAll = function(reallyDo, replaceWith, ignoreCase) {
+            if(!RegExp.prototype.isPrototypeOf(reallyDo)) {
+                return this.replace(new RegExp(reallyDo, (ignoreCase ? "gi" : "g")), replaceWith);
+            } else {
+                return this.replace(reallyDo, replaceWith);
+    }
+}
+
+    </script>
+</body>
+</html>

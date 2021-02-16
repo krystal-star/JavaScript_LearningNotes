@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">    
+    <title>IFE ECMAScript</title>
+    <style>
+        #smile{
+            width: 500px;
+            height: 480px;
+            background-image:url("image/erik_smile.jpg");
+            background-repeat: no-repeat;
+            background-position:0px 0px;
+        }
+    </style>
+</head>
+<body>
+    <div id="smile"></div>
+    <script>
+        var vertical = 0;
+    
+        window.onload = simle;
+        
+        function simle(){
+            var i = setInterval(function(){
+                vertical = vertical - 480;
+                console.log(vertical);
+                document.getElementById("smile").style = "background-position:0px "+vertical+"px";
+                if(vertical <= -7680){
+                    clearInterval(i);
+                    outSimle();
+                }
+            },100);
+
+        }
+        
+        function outSimle(){
+            var j = setInterval(function(){
+                vertical = vertical + 480;
+                console.log(vertical);
+                document.getElementById("smile").style = "background-position:0px "+vertical+"px";
+                if(vertical >= 0){
+                    clearInterval(j);
+                    simle();
+                }
+            },100)
+        }
+
+        
+    </script>
+    
+</body>
+</html>

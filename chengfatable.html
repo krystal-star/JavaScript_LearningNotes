@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">    
+    <title>IFE ECMAScript</title>
+</head>
+<body>        
+    <table>
+        <th>九九乘法表</th>
+
+    </table>
+    <script>
+//练习使用循环实现一个九九乘法表
+//第一步，最低要求：在Console中按行输出 n * m = t
+//然后，尝试在网页中，使用table来实现一个九九乘法表
+var table = document.getElementsByTagName("table")[0];
+for(var i=1; i<=9; i++){
+    var tr = document.createElement("tr")
+    for (var j=1; j<=9; j++){
+        var td = document.createElement("td");
+        td.innerText = i + " x " + j + " = " + i*j;
+        tr.appendChild(td);
+    }
+    table.appendChild(tr);
+}
+
+
+    </script>
+</body>
+</html>
