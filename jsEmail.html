@@ -6,11 +6,16 @@
     <style>
         li:hover{
             background-color: antiquewhite;
-            cursor: pointer;;
+            cursor: pointer;
+        }
+        li.choice{
+            background-color: darksalmon;
         }
     </style>
 </head>
 <body>
+    <p><a href="http://ife.baidu.com/course/detail/id/52" target="_blank">指导</a></p>
+    <p>输入邮箱：</p>
 
     <div class="wrapper">
         <input id="email-input" type="text">
@@ -21,12 +26,60 @@
         var postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net'];
         var ul = document.getElementById("email-sug-wrapper");
 
-        document.getElementById("email-input").onkeyup = function(){         
-            removeTips();  
-            addTips();
-            controlState();
+        document.getElementById("email-input").onkeyup = function(event){       
+            if(event.keyCode != 13 && event.keyCode != 38 && event.keyCode != 40){
+                resetLiState();
+                removeTips();  
+                addTips();
+                controlState();
+            }
+            
             console.log("event handel");
         }
+
+        function resetLiState(){
+            var li = document.querySelectorAll("li.choice");
+            var lis = document.querySelectorAll("li");
+            if(li.length!=0){
+                if(li[0].id != 0){
+                    li[0].className = '';
+                    lis[0].className = 'choice';
+                }
+            }
+        }
+
+        window.addEventListener("keydown", function(event){
+            var li = document.querySelectorAll("li.choice");
+            var lis = document.querySelectorAll("li");
+            if(li.length != 0){
+                li[0].className = '';
+            }
+            
+            if(event.keyCode == 38){
+                if(li[0].id != 0){
+                    lis[Number(li[0].id)-1].className = 'choice';
+                }else{
+                    lis[lis.length-1].className = 'choice';
+                }
+            }
+
+            if(event.keyCode == 40){
+                if(li[0].id != lis.length-1){
+                    lis[Number(li[0].id)+1].className = 'choice';
+                }else{
+                    lis[0].className = 'choice';
+                }
+            }
+
+            if(event.keyCode == 13){
+                document.getElementById("email-input").value = li[0].innerHTML;
+                hideBlock();
+            }
+
+            if(event.keyCode == 27){
+                document.getElementById("email-input").select();  //全选
+            }
+        })
 
         function getInput(s){
             return s.trim();
@@ -74,7 +127,9 @@
 
         function addTips(){
             var lis = getTips();
+            lis[0].className = "choice";
             for(var i=0; i<lis.length; i++){
+                lis[i].id = i;
                 ul.appendChild(lis[i]);
             }
         }
@@ -111,7 +166,12 @@
             if(target.nodeName.toLowerCase() == "li"){
                 document.getElementById("email-input").value = target.innerHTML;
                 hideBlock();
+                document.getElementById("email-input").focus();
             }
+        }
+
+        window.onload = function(){
+            document.getElementById("email-input").focus();
         }
 
     </script>
